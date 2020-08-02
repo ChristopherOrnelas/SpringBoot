@@ -1,16 +1,18 @@
 package com.eventoapp;
 
-import javax.activation.DataSource;
-
-import org.hibernate.boot.model.relational.Database;
+import javax.sql.DataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaVendorAdapter;
+import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
 @Configuration
+@Profile("dev")
 public class DataConfiguration {
+
 	@Bean
     public DataSource dataSource(){
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -32,4 +34,3 @@ public class DataConfiguration {
 		return adapter;
 	}
 }
-
