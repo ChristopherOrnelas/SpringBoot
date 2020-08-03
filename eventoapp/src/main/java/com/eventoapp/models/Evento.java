@@ -6,12 +6,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.List;
+
 
 @Entity
 public class Evento implements Serializable{
+	
 	private static final long serialVersionUID = 1L;
 	
-	@Id	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	@Id
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private long codigo;
 	
 	private String nome;
@@ -19,13 +24,15 @@ public class Evento implements Serializable{
 	private String data;
 	private String horario;
 	
+	@OneToMany
+	private List<Convidado> convidados;
+	
 	public long getCodigo() {
 		return codigo;
 	}
 	public void setCodigo(long codigo) {
 		this.codigo = codigo;
 	}
-	
 	public String getNome() {
 		return nome;
 	}
@@ -50,5 +57,6 @@ public class Evento implements Serializable{
 	public void setHorario(String horario) {
 		this.horario = horario;
 	}
-
+	
+	
 }
