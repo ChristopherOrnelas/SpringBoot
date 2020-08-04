@@ -12,6 +12,7 @@ public class Convidado {
 	@NotEmpty
 	private String rg;
 	
+	@NotEmpty
     private String nomeConvidado;
 
     @ManyToOne
