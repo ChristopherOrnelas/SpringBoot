@@ -8,16 +8,15 @@ import com.eventosapp.repository.ConvidadoRepository;
 import com.eventosapp.repository.EventoRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.boot.context.properties.bind.BindResult;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.validation.BindingResult;
-//import org.springframework.validation.Errors;
+
 
 
 @EnableJpaRepositories(basePackages = "com.eventosapp.repository")
@@ -36,8 +35,13 @@ public class EventoController {
 	}
 
 	@RequestMapping(value = "/cadastrarEvento", method = RequestMethod.POST)
-	public String form(Evento evento) {
+	public String form(Evento evento, BindingResult result, RedirectAttributes attributes) {
+		if (result.hasErrors()){
+			attributes.addFlashAttribute("mensagem", "Verifique os campos!");
+			return "redirect:/cadastrarEvento";
+		}
 		er.save(evento);
+		attributes.addFlashAttribute("mensagem", "Evento adicionado");
 		return "redirect:/cadastrarEvento";
 	}
 
@@ -70,6 +74,7 @@ public class EventoController {
 		Evento evento = er.findByCodigo(codigo);
 		convidado.setEvento(evento);
 		cr.save(convidado);
+		attributes.addFlashAttribute("mensagem", "Convidado adicionado");
 		return "redirect:/{codigo}";
 	}
 }
